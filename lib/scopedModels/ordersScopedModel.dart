@@ -14,8 +14,8 @@ class OrdersScopedModel extends Model {
   // this is the function to get all the orders
   Future<List<Order>> getAllOrdersListFuture() async {
     http.Response result = await http.get(connection.orderUrl);
-    var pased = json.decode(result.body).cast<Map<String, dynamic>>();
-    _allOrdersList = pased.map<Order>((json) => Order.fromJson(json)).toList();
+    var parsed = json.decode(result.body).cast<Map<String, dynamic>>();
+    _allOrdersList = parsed.map<Order>((json) => Order.fromJson(json)).toList();
     return _allOrdersList;
   }
 

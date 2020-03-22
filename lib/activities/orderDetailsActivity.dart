@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../scopedModels/ordersScopedModel.dart';
+import '../models/order.dart';
+
 class OrderDetailsActivity extends StatefulWidget {
+  Order _order;
+  OrderDetailsActivity(this._order);
   @override
   _OrderDetailsActivityState createState() => _OrderDetailsActivityState();
 }

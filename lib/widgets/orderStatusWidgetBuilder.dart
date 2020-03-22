@@ -57,8 +57,8 @@ class _OrderStatusWidgetBuilderState extends State<OrderStatusWidgetBuilder> {
                   width: 50.0,
                   height: 50.0,
                   child: Icon(
-                    Icons.hourglass_empty,
-                    color: Colors.grey,
+                    Icons.check,
+                    color: Colors.yellow,
                     size: 36.0,
                   ),
                 ),
@@ -89,8 +89,8 @@ class _OrderStatusWidgetBuilderState extends State<OrderStatusWidgetBuilder> {
                   width: 50.0,
                   height: 50.0,
                   child: Icon(
-                    Icons.hourglass_empty,
-                    color: Colors.grey,
+                    Icons.clear,
+                    color: Colors.red,
                     size: 36.0,
                   ),
                 ),
@@ -123,8 +123,8 @@ class _OrderStatusWidgetBuilderState extends State<OrderStatusWidgetBuilder> {
                   width: 50.0,
                   height: 50.0,
                   child: Icon(
-                    Icons.hourglass_empty,
-                    color: Colors.grey,
+                    Icons.check_circle,
+                    color: Colors.green,
                     size: 36.0,
                   ),
                 ),
