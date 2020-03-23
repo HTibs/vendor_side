@@ -88,7 +88,7 @@ class OrdersScopedModel extends Model {
                         // call funtion of order details while passing the order id to it
                         // getOrderDetails(String orderID);
                         Navigator.pushNamed(context, '/orderDetails',
-                            arguments: all[index]);
+                            arguments: index);
                       },
                     ),
                   ),
