@@ -9,7 +9,9 @@ class ItemsScopedModels extends Model {
   Item _item;
 
   Future<Item> getSingleItemFuture(String code) async {
-    http.Response result = await http.get(connection.itemsUrl);
+    String newurl;
+    newurl = connection.itemsSearchUrl + code;
+    http.Response result = await http.get(newurl);
     var parsed = json.decode(result.body).cast<Map<String, dynamic>>();
     _item = parsed.map<Item>((json) => Item.fromJson(json)).toList();
     return _item;

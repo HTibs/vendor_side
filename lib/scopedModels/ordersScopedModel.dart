@@ -19,7 +19,7 @@ class OrdersScopedModel extends Model {
     return _allOrdersList;
   }
 
-  Widget allItemsFutureBuilder(BuildContext context) {
+  Widget allOrdersFutureBuilder(BuildContext context) {
     return FutureBuilder<List<Order>>(
       future: getAllOrdersListFuture(),
       builder: (context, snapshot) {
@@ -87,7 +87,8 @@ class OrdersScopedModel extends Model {
                         // open details of the order
                         // call funtion of order details while passing the order id to it
                         // getOrderDetails(String orderID);
-                        Navigator.pushNamed(context, '/orderDetails');
+                        Navigator.pushNamed(context, '/orderDetails',
+                            arguments: all[index]);
                       },
                     ),
                   ),

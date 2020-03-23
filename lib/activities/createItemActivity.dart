@@ -158,8 +158,7 @@ class _CreateItemActivityState extends State<CreateItemActivity> {
                                   ),
                                   onSaved: (String value) {
                                     setState(() {
-                                      _itemInputData.stock =
-                                          double.parse(value);
+                                      _itemInputData.stock = value;
                                     });
                                   },
                                   validator: (String value) {
@@ -215,8 +214,7 @@ class _CreateItemActivityState extends State<CreateItemActivity> {
                                   ),
                                   onSaved: (String value) {
                                     setState(() {
-                                      _itemInputData.costPrice =
-                                          double.parse(value);
+                                      _itemInputData.costPrice = value;
                                     });
                                   },
                                   validator: (String value) {
@@ -274,8 +272,7 @@ class _CreateItemActivityState extends State<CreateItemActivity> {
                                   ),
                                   onSaved: (String value) {
                                     setState(() {
-                                      _itemInputData.sellPrice =
-                                          double.parse(value);
+                                      _itemInputData.sellPrice = value;
                                     });
                                   },
                                   validator: (String value) {

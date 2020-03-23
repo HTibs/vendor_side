@@ -56,7 +56,7 @@ class _HomeActivityState extends State<HomeActivity> {
                   child: ScopedModelDescendant<OrdersScopedModel>(builder:
                       (BuildContext context, Widget child,
                           OrdersScopedModel model) {
-                    return model.allItemsFutureBuilder(context);
+                    return model.allOrdersFutureBuilder(context);
                   }))),
         ),
       ),

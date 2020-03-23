@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 
 import '../scopedModels/ordersScopedModel.dart';
 import '../models/order.dart';
+import '../models/detailsActivityCartItem.dart';
 
 class OrderDetailsActivity extends StatefulWidget {
-  Order _order;
+  Order _order = new Order();
   OrderDetailsActivity(this._order);
   @override
   _OrderDetailsActivityState createState() => _OrderDetailsActivityState();
@@ -13,9 +14,10 @@ class OrderDetailsActivity extends StatefulWidget {
 
 class _OrderDetailsActivityState extends State<OrderDetailsActivity> {
   TextEditingController fulfillmentQtyController = new TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    DetailsActivityCartItem ay = DetailsActivityCartItem()
+        .createDetailsActivityCartItem(widget._order.cartItems[1]);
     return Scaffold(
       appBar: AppBar(
         title: Text('Order Details'),
@@ -31,14 +33,14 @@ class _OrderDetailsActivityState extends State<OrderDetailsActivity> {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        'Restaurant Name',
+                        widget._order.restaurantId,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 20.0),
                       ),
                     ),
                     Expanded(
                         child: Text(
-                      'Order ID',
+                      widget._order.orderId,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 15.0, color: Colors.grey),
                     )),
@@ -51,13 +53,13 @@ class _OrderDetailsActivityState extends State<OrderDetailsActivity> {
                   children: <Widget>[
                     Expanded(
                         child: Text(
-                      'Date',
+                      widget._order.dateTime,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.grey, fontSize: 15.0),
                     )),
                     Expanded(
                         child: Text(
-                      'Time',
+                      widget._order.dateTime,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.grey, fontSize: 15.0),
                     ))

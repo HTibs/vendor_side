@@ -16,17 +16,18 @@ class DetailsActivityCartItem {
   String margin;
 
   DetailsActivityCartItem(
-      {this.itemId,
-      this.itemName,
-      this.requestedQty,
-      this.fulfilledQty,
-      this.currentCost,
-      this.currentSell,
-      this.currentStock,
-      this.margin,
-      this.newSell});
+      {this.itemId = '',
+      this.itemName = '',
+      this.requestedQty = '',
+      this.fulfilledQty = '',
+      this.currentCost = '',
+      this.currentSell = '',
+      this.currentStock = '',
+      this.margin = '',
+      this.newSell = ''});
 
-  createDetailsActivityCartItem(CartItem recievedCartItem) {
+  DetailsActivityCartItem createDetailsActivityCartItem(
+      CartItem recievedCartItem) {
     DetailsActivityCartItem temp;
 
     Item _item = ItemsScopedModels()
@@ -40,6 +41,7 @@ class DetailsActivityCartItem {
     temp.newSell = _item.sellPrice;
     temp.margin = _item.code;
     temp.fulfilledQty = recievedCartItem.requestedQty;
+    print(temp.currentStock);
 
     return temp;
   }
