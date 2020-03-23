@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 import '../scopedModels/ordersScopedModel.dart';
 import '../models/order.dart';
@@ -18,111 +19,122 @@ class _OrderDetailsActivityState extends State<OrderDetailsActivity> {
   @override
   Widget build(BuildContext context) {
     print(widget.orderIndex);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Order Details'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 5.0, left: 2.0, right: 2.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        widget.orderIndex.toString(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 20.0),
+    return ScopedModel<OrdersScopedModel>(
+      model: OrdersScopedModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Order Details'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.only(top: 5.0, left: 2.0, right: 2.0),
+          child: ScopedModelDescendant<OrdersScopedModel>(
+            builder: (context, child, model) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              'Restaurant ${OrdersScopedModel.allOrdersList[widget.orderIndex].restaurantId}',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 20.0),
+                            ),
+                          ),
+                          Expanded(
+                              child: Text(
+                            'Order ${OrdersScopedModel.allOrdersList[widget.orderIndex].orderId}',
+                            textAlign: TextAlign.center,
+                            style:
+                                TextStyle(fontSize: 15.0, color: Colors.grey),
+                          )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: Text(
+                            '${OrdersScopedModel.allOrdersList[widget.orderIndex].dateTime}',
+                            textAlign: TextAlign.center,
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 15.0),
+                          )),
+                          Expanded(
+                              child: Text(
+                            '${OrdersScopedModel.allOrdersList[widget.orderIndex].dateTime}',
+                            textAlign: TextAlign.center,
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 15.0),
+                          ))
+                        ],
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Container(
+                      height: 500.0,
+                      child: ListView.builder(
+                        itemCount: OrdersScopedModel
+                            .allOrdersList[widget.orderIndex].cartItems.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return itemListCreator(OrdersScopedModel
+                              .allOrdersList[widget.orderIndex]
+                              .cartItems[index]);
+                        },
+                        // container for list view of all items
+                        // add one more conatiner for cart total
                       ),
                     ),
-                    Expanded(
-                        child: Text(
-                      widget.orderIndex.toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 15.0, color: Colors.grey),
-                    )),
-                  ],
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Text(
-                      widget.orderIndex.toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey, fontSize: 15.0),
-                    )),
-                    Expanded(
-                        child: Text(
-                      widget.orderIndex.toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey, fontSize: 15.0),
-                    ))
-                  ],
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: Container(
-                height: 500.0,
-                child: ListView(
-                  children: <Widget>[
-                    itemListCreator(),
-                    itemListCreator(),
-                    itemListCreator(),
-                    itemListCreator(),
-                    itemListCreator(),
-                    itemListCreator(),
-                  ],
-
-                  // container for list view of all items
-                  // add one more conatiner for cart total
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 40.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  'Total:  Rs. 000',
-                  textAlign: TextAlign.end,
-                  style: TextStyle(fontSize: 15.0),
-                ),
-              ),
-            ),
-            Container(
-              // container for two buttons one for fulfill and
-              // one for cancel
-
-              width: MediaQuery.of(context).size.width,
-              height: 50.0,
-              color: Colors.red,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton(
-                    child: Text('Cancel'),
                   ),
-                  RaisedButton(
-                    child: Text('Fulfill'),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 40.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        'Total:  Rs. 000',
+                        textAlign: TextAlign.end,
+                        style: TextStyle(fontSize: 15.0),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // container for two buttons one for fulfill and
+                    // one for cancel
+
+                    width: MediaQuery.of(context).size.width,
+                    height: 50.0,
+                    color: Colors.red,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        RaisedButton(
+                          child: Text('Cancel'),
+                        ),
+                        RaisedButton(
+                          child: Text('Fulfill'),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
-              ),
-            ),
-          ],
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  Widget itemListCreator() {
+  Widget itemListCreator(var recievedItem) {
+    DetailsActivityCartItem detaileditem = new DetailsActivityCartItem()
+        .createDetailsActivityCartItem(recievedItem);
+    print(detaileditem);
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey, width: 0.5),
@@ -142,7 +154,7 @@ class _OrderDetailsActivityState extends State<OrderDetailsActivity> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text(
-                  'Item Name',
+                  detaileditem.itemName,
                   style: TextStyle(fontSize: 20.0),
                 ),
                 Row(

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.yellow),
       // home: LoginActivity(), this is not specified with '/' route
       onGenerateRoute: router.generateRoute,
-      initialRoute: '/home',
+      initialRoute: '/',
     );
   }
 }

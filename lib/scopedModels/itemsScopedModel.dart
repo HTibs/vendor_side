@@ -12,9 +12,12 @@ class ItemsScopedModels extends Model {
     String newurl;
     newurl = connection.itemsSearchUrl + code;
     http.Response result = await http.get(newurl);
-    var parsed = json.decode(result.body).cast<Map<String, dynamic>>();
-    _item = parsed.map<Item>((json) => Item.fromJson(json)).toList();
-    return _item;
+    print(result);
+    var parsed = json.decode(result.body);
+    print(parsed);
+    Item nitem = new Item.fromJson(parsed[0]);
+    print(nitem);
+    return nitem;
   }
 
   List<Item> _items = [];

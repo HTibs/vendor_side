@@ -9,6 +9,7 @@ import 'activities/loginActivity.dart';
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case '/':
+      // add the login activity here later
       return MaterialPageRoute(builder: (context) => HomeActivity());
     case '/home':
       return MaterialPageRoute(builder: (context) => HomeActivity());

@@ -5,18 +5,22 @@ import 'dart:convert';
 import 'dart:async';
 
 import '../models/order.dart';
+import '../models/detailsActivityCartItem.dart';
 import '../services/connections.dart' as connection;
 import '../widgets/orderStatusWidgetBuilder.dart';
+import '../models/cartItem.dart';
+import '../models/item.dart';
 
 class OrdersScopedModel extends Model {
-  List<Order> _allOrdersList = [];
+  static List<Order> allOrdersList = [];
+  //static List<DetailsActivityCartItem> allDetailedCartItemsList = [];
 
   // this is the function to get all the orders
   Future<List<Order>> getAllOrdersListFuture() async {
     http.Response result = await http.get(connection.orderUrl);
     var parsed = json.decode(result.body).cast<Map<String, dynamic>>();
-    _allOrdersList = parsed.map<Order>((json) => Order.fromJson(json)).toList();
-    return _allOrdersList;
+    allOrdersList = parsed.map<Order>((json) => Order.fromJson(json)).toList();
+    return allOrdersList;
   }
 
   Widget allOrdersFutureBuilder(BuildContext context) {
@@ -98,5 +102,24 @@ class OrdersScopedModel extends Model {
           );
           ;
         });
+  }
+
+  Future<DetailsActivityCartItem> createDetailsActivityCartItem(
+      CartItem recievedCartItem) async {
+    DetailsActivityCartItem temp;
+
+    Item _item = await Item().getSingleItemFuture(recievedCartItem.itemId);
+    temp.itemName = recievedCartItem.itemName;
+    temp.itemId = recievedCartItem.itemId;
+    temp.requestedQty = recievedCartItem.requestedQty;
+    temp.currentSell = recievedCartItem.pricePerUnit;
+    temp.currentCost = _item.costPrice;
+    temp.currentStock = _item.stock;
+    temp.newSell = _item.sellPrice;
+    temp.margin = _item.code;
+    temp.fulfilledQty = recievedCartItem.requestedQty;
+    print(temp.currentStock);
+
+    return temp;
   }
 }
