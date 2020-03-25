@@ -78,19 +78,9 @@ class _OrderDetailsActivityState extends State<OrderDetailsActivity> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                     child: Container(
-                      height: 500.0,
-                      child: ListView.builder(
-                        itemCount: OrdersScopedModel
-                            .allOrdersList[widget.orderIndex].cartItems.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return itemListCreator(OrdersScopedModel
-                              .allOrdersList[widget.orderIndex]
-                              .cartItems[index]);
-                        },
-                        // container for list view of all items
-                        // add one more conatiner for cart total
-                      ),
-                    ),
+                        height: 500.0,
+                        child: OrdersScopedModel.detailsItemsListBuilder(
+                            widget.orderIndex)),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 40.0),
@@ -131,167 +121,167 @@ class _OrderDetailsActivityState extends State<OrderDetailsActivity> {
     );
   }
 
-  Widget itemListCreator(var recievedItem) {
-    DetailsActivityCartItem detaileditem = new DetailsActivityCartItem()
-        .createDetailsActivityCartItem(recievedItem);
-    print(detaileditem);
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 0.5),
-      ),
-      width: MediaQuery.of(context).size.width,
-      //color: Colors.white,
-      height: 100.0,
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: 75.0,
-          ),
-          Expanded(
-              child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                  detaileditem.itemName,
-                  style: TextStyle(fontSize: 20.0),
-                ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      'Requested Qty:  ',
-                      style: TextStyle(color: Colors.grey, fontSize: 15.0),
-                    ),
-                    Text(
-                      '000 Kgs',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text('Rs. 000'),
-                        Text(
-                          'Current Cost',
-                          style: TextStyle(color: Colors.grey, fontSize: 10.0),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Text('Rs. 000'),
-                        Text(
-                          'Current Sell',
-                          style: TextStyle(color: Colors.grey, fontSize: 10.0),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Text('000'),
-                        Text(
-                          'Current Stock',
-                          style: TextStyle(color: Colors.grey, fontSize: 10.0),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )),
-          Container(
-            width: 100.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Container(
-                  color: Colors.blueGrey[50],
-                  child: Column(
-                    children: <Widget>[
-                      formField(),
-                      Text('Fulfillment Qty',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 10.0, color: Colors.grey)),
-                    ],
-                  ),
-                ),
-                Container(
-                  color: Colors.blueGrey[50],
-                  child: Column(
-                    children: <Widget>[
-                      formField(),
-                      Text(
-                        'Sell Price',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 10.0, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Margin:  ',
-                      style: TextStyle(color: Colors.grey, fontSize: 10.0),
-                    ),
-                    Text(
-                      '00%',
-                      style: TextStyle(color: Colors.black, fontSize: 10.0),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget formField() {
-    return Container(
-      height: 20.0,
-      width: 75.0,
-      child: TextFormField(
-        // opening stick
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 17.5),
-        cursorColor: Theme.of(context).primaryColor,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(top: 5.0, left: 5.0),
-          hintText: '000',
-          hintStyle: TextStyle(
-              color: Colors.grey, backgroundColor: Colors.transparent),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide.none),
-          fillColor: Colors.white,
-        ),
-        onSaved: (String value) {
-          fulfillmentQtyController.toString();
-        },
-        validator: (String value) {
-          if (fulfillmentQtyController.text.isEmpty) {
-            return 'Required';
-          } else {
-            // also check for double value existing name in database
-            // we return null when validation succeeds i.e no error in validation
-            return null;
-          }
-        },
-      ),
-    );
-  }
+//  Widget itemListCreator(var recievedItem) {
+//    DetailsActivityCartItem detaileditem = new DetailsActivityCartItem()
+//        .createDetailsActivityCartItem(recievedItem);
+//    print(detaileditem);
+//    return Container(
+//      decoration: BoxDecoration(
+//        border: Border.all(color: Colors.grey, width: 0.5),
+//      ),
+//      width: MediaQuery.of(context).size.width,
+//      //color: Colors.white,
+//      height: 100.0,
+//      child: Row(
+//        children: <Widget>[
+//          Container(
+//            width: 75.0,
+//          ),
+//          Expanded(
+//              child: Container(
+//            child: Column(
+//              crossAxisAlignment: CrossAxisAlignment.start,
+//              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//              children: <Widget>[
+//                Text(
+//                  detaileditem.itemName,
+//                  style: TextStyle(fontSize: 20.0),
+//                ),
+//                Row(
+//                  children: <Widget>[
+//                    Text(
+//                      'Requested Qty:  ',
+//                      style: TextStyle(color: Colors.grey, fontSize: 15.0),
+//                    ),
+//                    Text(
+//                      '000 Kgs',
+//                      style: TextStyle(
+//                          color: Colors.black,
+//                          fontSize: 15.0,
+//                          fontWeight: FontWeight.bold),
+//                    ),
+//                  ],
+//                ),
+//                Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                  children: <Widget>[
+//                    Column(
+//                      children: <Widget>[
+//                        Text('Rs. 000'),
+//                        Text(
+//                          'Current Cost',
+//                          style: TextStyle(color: Colors.grey, fontSize: 10.0),
+//                        )
+//                      ],
+//                    ),
+//                    Column(
+//                      children: <Widget>[
+//                        Text('Rs. 000'),
+//                        Text(
+//                          'Current Sell',
+//                          style: TextStyle(color: Colors.grey, fontSize: 10.0),
+//                        )
+//                      ],
+//                    ),
+//                    Column(
+//                      children: <Widget>[
+//                        Text('000'),
+//                        Text(
+//                          'Current Stock',
+//                          style: TextStyle(color: Colors.grey, fontSize: 10.0),
+//                        )
+//                      ],
+//                    ),
+//                  ],
+//                ),
+//              ],
+//            ),
+//          )),
+//          Container(
+//            width: 100.0,
+//            child: Column(
+//              crossAxisAlignment: CrossAxisAlignment.center,
+//              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//              children: <Widget>[
+//                Container(
+//                  color: Colors.blueGrey[50],
+//                  child: Column(
+//                    children: <Widget>[
+//                      formField(),
+//                      Text('Fulfillment Qty',
+//                          textAlign: TextAlign.center,
+//                          style: TextStyle(fontSize: 10.0, color: Colors.grey)),
+//                    ],
+//                  ),
+//                ),
+//                Container(
+//                  color: Colors.blueGrey[50],
+//                  child: Column(
+//                    children: <Widget>[
+//                      formField(),
+//                      Text(
+//                        'Sell Price',
+//                        textAlign: TextAlign.center,
+//                        style: TextStyle(fontSize: 10.0, color: Colors.grey),
+//                      ),
+//                    ],
+//                  ),
+//                ),
+//                Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: <Widget>[
+//                    Text(
+//                      'Margin:  ',
+//                      style: TextStyle(color: Colors.grey, fontSize: 10.0),
+//                    ),
+//                    Text(
+//                      '00%',
+//                      style: TextStyle(color: Colors.black, fontSize: 10.0),
+//                    )
+//                  ],
+//                ),
+//              ],
+//            ),
+//          ),
+//        ],
+//      ),
+//    );
+//  }
+//
+//  Widget formField() {
+//    return Container(
+//      height: 20.0,
+//      width: 75.0,
+//      child: TextFormField(
+//        // opening stick
+//        keyboardType: TextInputType.numberWithOptions(decimal: true),
+//        inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+//        textAlign: TextAlign.center,
+//        style: TextStyle(fontSize: 17.5),
+//        cursorColor: Theme.of(context).primaryColor,
+//        decoration: InputDecoration(
+//          contentPadding: EdgeInsets.only(top: 5.0, left: 5.0),
+//          hintText: '000',
+//          hintStyle: TextStyle(
+//              color: Colors.grey, backgroundColor: Colors.transparent),
+//          border: OutlineInputBorder(
+//              borderRadius: BorderRadius.circular(10.0),
+//              borderSide: BorderSide.none),
+//          fillColor: Colors.white,
+//        ),
+//        onSaved: (String value) {
+//          fulfillmentQtyController.toString();
+//        },
+//        validator: (String value) {
+//          if (fulfillmentQtyController.text.isEmpty) {
+//            return 'Required';
+//          } else {
+//            // also check for double value existing name in database
+//            // we return null when validation succeeds i.e no error in validation
+//            return null;
+//          }
+//        },
+//      ),
+//    );
+//  }
 }

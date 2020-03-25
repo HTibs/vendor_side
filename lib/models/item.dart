@@ -48,13 +48,4 @@ class Item {
     print(_item.sellPrice);
     // once the item is saved to DB succefssfully
   }
-
-  int _generateItemCode(
-    List<Item> _itemList,
-  ) {
-    if (_itemList.length == 0) {
-      return 1001;
-    } else
-      return (1001 + _itemList.length);
-  }
 }
