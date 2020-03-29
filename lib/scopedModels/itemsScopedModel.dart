@@ -56,17 +56,23 @@ class ItemsScopedModels extends Model {
             height: 125.0,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0), color: Colors.blue),
+                //TODO: remove the bluegrey color and make it white better UI
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.blueGrey),
             child: Row(
               children: <Widget>[
                 Container(
                   // for the image
                   width: 100.0,
                   decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: Colors.white,
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10.0),
                           bottomLeft: Radius.circular(10.0))),
+                  child: Image.network(
+                    ItemsScopedModels.allItemsList[index].imageURI,
+                    fit: BoxFit.fill,
+                  ),
                 ),
                 Container(
                   width: 240.0,
