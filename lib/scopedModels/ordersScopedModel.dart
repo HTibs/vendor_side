@@ -112,25 +112,46 @@ class OrdersScopedModel extends Model {
     List<DetailsActivityCartItem> detailedItems = [];
     Item item = Item();
 
+    // add a looping statement for traversal of cartitems list
+    Future<Item> getSingleItemFuture(String code) async {
+      String newurl;
+      newurl = connection.itemsSearchUrl + code;
+      http.Response result = await http.get(newurl);
+      var parsed = json.decode(result.body);
+      Item nitem = new Item.fromJson(parsed[0]);
+      print(nitem.toString());
+      return nitem;
+    }
+
     Future<List<DetailsActivityCartItem>>
         getallDetailedItemsListFuture() async {
-      // add a looping statement for traversal of cartitems list
-      Future<Item> getSingleItemFuture(String code) async {
-        String newurl;
-        newurl = connection.itemsSearchUrl + code;
-        http.Response result = await http.get(newurl);
-        var parsed = json.decode(result.body);
-        Item nitem = new Item.fromJson(parsed[0]);
-        print(nitem.toString());
-        return nitem;
-      }
+//      Future.forEach(allOrdersList[index].cartItems, (i) async {
+//        DetailsActivityCartItem value = DetailsActivityCartItem();
+//        item =
+//            await getSingleItemFuture(allOrdersList[index].cartItems[i].itemId);
+//        print(item.toString() + "sdsdss");
+//        value.itemId = item.code;
+//        value.itemName = item.name;
+//        value.requestedQty = allOrdersList[index].cartItems[i].requestedQty;
+//        value.currentSell = allOrdersList[index].cartItems[i].pricePerUnit;
+//        value.currentCost = item.costPrice;
+//        value.currentStock = item.stock;
+//        value.newSell = item.sellPrice;
+//        value.margin = item.code;
+//        value.fulfilledQty = allOrdersList[index].cartItems[i].requestedQty;
+//        print(value.itemId);
+//        detailedItems.insert(i, value);
+//        print('hiiii');
+//        print(detailedItems[i].toString());
+//        return detailedItems;
+//      });
 
       DetailsActivityCartItem value = DetailsActivityCartItem();
       for (int i = 0; i < allOrdersList[index].cartItems.length; i++) {
         print('value of i = $i');
         item =
             await getSingleItemFuture(allOrdersList[index].cartItems[i].itemId);
-        print(item.toString() + "sdsdss");
+        print(item.code.toString() + "sdsdss");
 
         value.itemId = item.code;
         value.itemName = item.name;
@@ -141,10 +162,12 @@ class OrdersScopedModel extends Model {
         value.newSell = item.sellPrice;
         value.margin = item.code;
         value.fulfilledQty = allOrdersList[index].cartItems[i].requestedQty;
-        detailedItems.insert(i, value);
+        print(value.itemId);
+        detailedItems.add(value);
         print('hiiii');
-        print(detailedItems[i].itemName);
+        print(detailedItems[i].itemName.toString());
       }
+      print(detailedItems.toString());
 
       return detailedItems;
     }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter/services.dart';
 
 import '../services/dummyData.dart';
-import 'package:flutter/services.dart';
+import '../scopedModels/itemsScopedModel.dart';
 
 class ManageInventoryActivity extends StatefulWidget {
   @override
@@ -36,211 +38,54 @@ class _ManageInventoryActivityState extends State<ManageInventoryActivity> {
     // TODO: implement initState
     super.initState();
     //TODO: add controllers intial vaulues with the values recieved from map value
-    _stockCntrl = new TextEditingController(text: _openingStock);
-    _costPriceCntrl = new TextEditingController(text: _costPrice);
-    _sellPriceCntrl = new TextEditingController(text: _sellPrice);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Bulk Update Items'),
-      ),
-      body: Column(
-        children: <Widget>[
-          ListView(
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            // add the list of all the items
-            children: <Widget>[
-              _listItem(),
-            ],
-          ),
-          RaisedButton(
-            child: Text('Update All'),
-            color: Theme.of(context).primaryColor,
-            textColor: Colors.white,
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _listItem() {
-    // call dummy itemdata funtion
-    //TODO: add dummy data from here
-    //Map<String, dynamic> dummyItem = DummyData.getDummyItem();
-    return Padding(
-      padding: EdgeInsets.only(left: 15.0, right: 5.0, top: 10.0),
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusScopeNode());
-        },
-        child: Container(
-          height: 125.0,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0), color: Colors.blue),
-          child: Row(
-            children: <Widget>[
-              Container(
-                // for the image
-                width: 100.0,
-                decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10.0),
-                        bottomLeft: Radius.circular(10.0))),
-              ),
-              Container(
-                width: 240.0,
-                decoration: BoxDecoration(color: Colors.white),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5.0),
-                            child: Text(
-                              '$_itemName',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                              ),
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              '$_itemCode',
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Wrap(
-                        direction: Axis.horizontal,
-                        alignment: WrapAlignment.center,
-                        spacing: 15.0,
-                        children: <Widget>[
-                          _addSubtractValue(_stockCntrl, 'Stock'),
-                          _addSubtractValue(_costPriceCntrl, 'Cost Price'),
-                          _addSubtractValue(_sellPriceCntrl, 'Sell Price')
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+    return ScopedModel(
+      model: ItemsScopedModels(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Bulk Update Items'),
         ),
-      ),
-    );
-  }
-
-  Widget _addSubtractValue(TextEditingController inputCntrl, String text) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          width: 60.0,
-          decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).primaryColor),
-              borderRadius: BorderRadius.circular(5.0)),
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: 40.0,
-                  width: 60.0,
-                  child: TextField(
-                    // opening stick
-                    controller: inputCntrl,
-                    textAlign: TextAlign.center,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    inputFormatters: [
-                      WhitelistingTextInputFormatter.digitsOnly
-                    ],
-                    style: TextStyle(fontSize: 20.0),
-                    cursorColor: Theme.of(context).primaryColor,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0.0),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide.none),
-                      fillColor: Colors.white,
-                    ),
-                  ),
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          child: itemsListBuilder(),
+        ),
+        bottomNavigationBar: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 50.0,
+          margin: EdgeInsets.only(top: 2.0),
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              color: Colors.green,
+              child: Center(
+                child: Text(
+                  'Update',
+                  style: TextStyle(fontSize: 17.0, color: Colors.white),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 20.0,
-                      height: 20.0,
-                      child: IconButton(
-                        iconSize: 25.0,
-                        padding: EdgeInsets.all(0.0),
-                        icon: Icon(Icons.remove),
-                        color: Theme.of(context).primaryColor,
-                        splashColor: Theme.of(context).primaryColor,
-                        onPressed: () {
-                          setState(() {
-                            int value = int.parse(inputCntrl.text);
-                            value--;
-                            inputCntrl.text = '$value';
-                            // decrease the value by one
-                          });
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    SizedBox(
-                      width: 20.0,
-                      height: 20.0,
-                      child: IconButton(
-                        iconSize: 25.0,
-                        padding: EdgeInsets.all(0.0),
-                        splashColor: Theme.of(context).primaryColor,
-                        icon: Icon(Icons.add),
-                        color: Theme.of(context).primaryColor,
-                        onPressed: () {
-                          setState(() {
-                            int value = int.parse(inputCntrl.text);
-                            value++;
-                            inputCntrl.text = '$value';
-                            // decrease the value by one
-                          });
-                          // add the value by one
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
         ),
-        Text(
-          '$text',
-          style: TextStyle(fontSize: 12.5, color: Colors.grey),
-        )
-      ],
+      ),
+    );
+  }
+
+  Widget itemsListBuilder() {
+    // call dummy itemdata funtion
+    //TODO: add dummy data from here
+    //Map<String, dynamic> dummyItem = DummyData.getDummyItem();
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusScopeNode());
+      },
+      child: ScopedModelDescendant<ItemsScopedModels>(
+        builder: (BuildContext context, Widget child, ItemsScopedModels model) {
+          return ItemsScopedModels.allItemsFutureBuilder(context);
+        },
+      ),
     );
   }
 }
