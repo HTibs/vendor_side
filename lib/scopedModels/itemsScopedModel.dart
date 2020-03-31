@@ -8,7 +8,7 @@ import '../services/connections.dart' as connection;
 import '../widgets/addSubtractValueWidget.dart';
 
 class ItemsScopedModels extends Model {
-  static List<Item> allItemsList = [];
+  static  List<Item> allItemsList =[];
   Item _item;
 
   static Future<List<Item>> getAllItemsListFuture() async {
@@ -53,12 +53,12 @@ class ItemsScopedModels extends Model {
           TextEditingController _sellPriceCntrl = new TextEditingController(
               text: ItemsScopedModels.allItemsList[index].sellPrice);
           return Container(
-            height: 125.0,
+            height: 100.0,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 //TODO: remove the bluegrey color and make it white better UI
                 borderRadius: BorderRadius.circular(10.0),
-                color: Colors.blueGrey),
+                color: Colors.white),
             child: Row(
               children: <Widget>[
                 Container(
@@ -82,26 +82,25 @@ class ItemsScopedModels extends Model {
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Text(
-                                '${ItemsScopedModels.allItemsList[index].name}',
-                                style: TextStyle(
+                            Text(
+                              '${ItemsScopedModels.allItemsList[index].name}',
+                              style: TextStyle(
                                   fontSize: 20.0,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
+                                  textBaseline: TextBaseline.alphabetic),
+                              textAlign: TextAlign.start,
                             ),
-                            Expanded(
-                              child: Text(
-                                '${ItemsScopedModels.allItemsList[index].code}',
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text(
+                              '${ItemsScopedModels.allItemsList[index].code}',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 15.0,
-                                ),
-                              ),
+                                  textBaseline: TextBaseline.alphabetic),
                             )
                           ],
                         ),
@@ -113,11 +112,114 @@ class ItemsScopedModels extends Model {
                           alignment: WrapAlignment.center,
                           spacing: 15.0,
                           children: <Widget>[
-                            addSubtractValue(_stockCntrl, 'Stock', context),
-                            addSubtractValue(
-                                _costPriceCntrl, 'Cost Price', context),
-                            addSubtractValue(
-                                _sellPriceCntrl, 'Sell Price', context)
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  height: 40.0,
+                                  width: 60.0,
+                                  child: TextField(
+                                    keyboardType: TextInputType.number,
+                                    textAlign: TextAlign.center,
+                                    showCursor: false,
+                                    style: TextStyle(
+                                        fontSize: 20.0, color: Colors.red),
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.all(-5.0),
+                                        hintStyle: TextStyle(
+                                            fontSize: 20.0, color: Colors.grey),
+                                        hintText:
+                                            '${ItemsScopedModels.allItemsList[index].stock}',
+                                        filled: true,
+                                        fillColor: Color(0xFFF1F1F2)),
+                                    onChanged: (value) {
+                                      ItemsScopedModels
+                                          .allItemsList[index].stock = value;
+                                      print(
+                                          'ndjfndjsfnjdsnfjd${ItemsScopedModels.allItemsList[index].stock}');
+                                    },
+                                  ),
+                                ),
+                                Text(
+                                  'Stock  Kgs',
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 10.0),
+                                )
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  height: 40.0,
+                                  width: 60.0,
+                                  child: TextField(
+                                    keyboardType: TextInputType.number,
+                                    textAlign: TextAlign.center,
+                                    showCursor: false,
+                                    style: TextStyle(
+                                        fontSize: 20.0, color: Colors.red),
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.all(-5.0),
+                                        hintStyle: TextStyle(
+                                            fontSize: 20.0, color: Colors.grey),
+                                        hintText:
+                                            '${ItemsScopedModels.allItemsList[index].costPrice}',
+                                        filled: true,
+                                        fillColor: Color(0xFFF1F1F2)),
+                                    onChanged: (value) {
+                                      ItemsScopedModels.allItemsList[index]
+                                          .costPrice = value;
+                                    },
+                                  ),
+                                ),
+                                Text(
+                                  'Cost Price',
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 10.0),
+                                )
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  height: 40.0,
+                                  width: 60.0,
+                                  child: TextField(
+                                    keyboardType: TextInputType.number,
+                                    textAlign: TextAlign.center,
+                                    showCursor: false,
+                                    style: TextStyle(
+                                        fontSize: 20.0, color: Colors.red),
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.all(-5.0),
+                                        hintStyle: TextStyle(
+                                            fontSize: 20.0, color: Colors.grey),
+                                        hintText:
+                                            '${ItemsScopedModels.allItemsList[index].sellPrice}',
+                                        filled: true,
+                                        fillColor: Color(0xFFF1F1F2)),
+                                    onChanged: (value) {
+                                      ItemsScopedModels.allItemsList[index]
+                                          .sellPrice = value;
+                                    },
+                                  ),
+                                ),
+                                Text(
+                                  'Sell Price',
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 10.0),
+                                )
+                              ],
+                            ),
+
+                            //addSubtractValue(_stockCntrl, 'Stock'),
+                            //addSubtractValue(_costPriceCntrl, 'Cost Price'),
+                            //addSubtractValue(_sellPriceCntrl, 'Sell Price')
                           ],
                         ),
                       ),
@@ -144,8 +246,16 @@ class ItemsScopedModels extends Model {
     return nitem;
   }
 
-  void addItem(Item item) {
-    //items.add(item);
-    print(item);
+  saveDb() async {
+    print(allItemsList[0].costPrice);
+    print(allItemsList[1].costPrice);
+    print(jsonEncode(allItemsList));
+    String temp = allItemsListToJson(allItemsList);
+    print('dshdjshdjsdhkshdskjadhkjasdhkjsahdkjsdksdhkjasdhkjsdkshdkja');
+    print(temp);
+    Map<String, String> header = {"Content-type": "application/json"};
+    http.Response response = await http.put(connection.itemsBulkUpdateUrl,
+        headers: header, body: jsonEncode(allItemsList));
+    int statuscode = response.statusCode;
   }
 }

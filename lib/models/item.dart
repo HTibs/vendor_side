@@ -1,3 +1,13 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import '../services/connections.dart';
+
+String allItemsListToJson(List<Item> data) {
+  final dyn = new List<dynamic>.from(data.map((x) => x.toJson()));
+  return json.encode(dyn);
+}
+
 class Item {
   String code;
   String name;
@@ -38,14 +48,27 @@ class Item {
       };
 
   // as the item class is now created it can be implmented in other classes
-  saveDatatoDB(Item _item) {
+  saveDatatoDB(Item _item) async {
     // generate an item code here
     // create a function to generate an item code
     // create a list of items and the product to this list
     // List<Products> _itemsList
-    print('data to be saved to DB');
-    print(_item.name);
-    print(_item.sellPrice);
-    // once the item is saved to DB succefssfully
+    // http.Response response = await http.post(itemsUrl,
+    //   headers: {"Content-Type": "application/json"}, body: jsonEncode(_item));
+    Map<String, String> header = {"Content-type": "application/json"};
+    http.Response response =
+        await http.post(itemsUrl, headers: header, body: jsonEncode(_item));
+    var statusCode = response.statusCode;
+    if (statusCode < 200 || statusCode >= 400) {
+      print(response.statusCode);
+      throw new Exception('error while saving data');
+    } else {
+      print('item added');
+      print('data to be saved to DB');
+      print(_item.name);
+      print(_item.sellPrice);
+      return 1;
+      // once the item is saved to DB succefssfully
+    }
   }
 }

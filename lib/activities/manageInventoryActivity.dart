@@ -56,18 +56,23 @@ class _ManageInventoryActivityState extends State<ManageInventoryActivity> {
           width: MediaQuery.of(context).size.width,
           height: 50.0,
           margin: EdgeInsets.only(top: 2.0),
-          child: GestureDetector(
-            onTap: () {},
-            child: Container(
-              color: Colors.green,
-              child: Center(
-                child: Text(
-                  'Update',
-                  style: TextStyle(fontSize: 17.0, color: Colors.white),
+          child: ScopedModelDescendant<ItemsScopedModels>(builder:
+              (BuildContext context, Widget child, ItemsScopedModels model) {
+            return GestureDetector(
+              onTap: () {
+                model.saveDb();
+              },
+              child: Container(
+                color: Colors.green,
+                child: Center(
+                  child: Text(
+                    'Update',
+                    style: TextStyle(fontSize: 17.0, color: Colors.white),
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          }),
         ),
       ),
     );

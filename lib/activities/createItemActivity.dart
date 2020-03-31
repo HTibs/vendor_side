@@ -54,6 +54,7 @@ class _CreateItemActivityState extends State<CreateItemActivity> {
                         height: 30.0,
                       ),
                       //TODO: recieve the image link and pass to itemMap and then to db
+
                       ImageInput(),
                       SizedBox(
                         height: 15.0,
@@ -318,32 +319,36 @@ class _CreateItemActivityState extends State<CreateItemActivity> {
       return;
     }
     _formKey.currentState.save();
-    _itemInputData.saveDatatoDB(_itemInputData);
+    _itemInputData.imageURI = '';
+    _itemInputData.code = '';
+    var neww = _itemInputData.saveDatatoDB(_itemInputData);
     // clear form fields and give a toast to save item code
     //TODO: send the _itemFormData map to createProduct()n function of itmes
     // call the create product function hewre passing the receinve map
     // createItem(_itemFormData);
     //TODO: implement a dialog box with the saved item code
+    if (neww == 1) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Item Created "),
+            content: new Text("Item Code 1001"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: new Text("Close"),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/createItem');
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Item Created "),
-          content: new Text("Item Code 1001"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.pushNamed(context, '/createItem');
-              },
-            ),
-          ],
-        );
-      },
-    );
     // now clear all the textfields
   }
 }
